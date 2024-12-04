@@ -71,6 +71,10 @@ variable "costcenter_tag_value" {
   type        = string
   nullable    = false
   default     = "142" # DSB IKT cost center
+  validation {
+    error_message = "The 'costcenter_tag_value' must be supplied and cannot be null or empty string."
+    condition     = length(var.costcenter_tag_value) > 0
+  }
 }
 variable "network_rules" {
   description = "Network rules to apply to the terraform backend state storage account."
@@ -119,6 +123,23 @@ variable "network_rules" {
               # must be valid CIDR or IPV4
               can(cidrnetmask(ip))
               || can(regex("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$", ip))
+            )
+          ])
+        ) : true # allow to be optional
+      ) : true   # pass if not supplied, terraform handles this
+    )
+  }
+  validation {
+    error_message = "CIDR prefix can not be /31 or /32."
+    condition = (
+      can(var.network_rules.ip_rules) ? (
+        var.network_rules.ip_rules != null ? (
+          alltrue([
+            for ip in var.network_rules.ip_rules : (
+              # must not be /31 or /32
+              can(cidrnetmask(ip)) ? (
+                cidrnetmask(ip) != "255.255.255.254" && cidrnetmask(ip) != "255.255.255.255"
+              ) : true
             )
           ])
         ) : true # allow to be optional
