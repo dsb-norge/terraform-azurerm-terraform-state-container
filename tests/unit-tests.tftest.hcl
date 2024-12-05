@@ -150,7 +150,7 @@ run "costcenter_tag_default_value" {
     }
 }
 
-run "costcenter_tag_value_must_can_not_be_empty" {
+run "costcenter_tag_value_can_not_be_empty" {
     command = plan
 
     variables {
