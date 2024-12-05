@@ -3,6 +3,11 @@ output "container_id" {
   value       = module.state_container.container_id
 }
 
+output "container_name" {
+  description = "Name of the storage container created for terraform backend state."
+  value       = module.state_container.container_name
+}
+
 output "container_resource_manager_id" {
   description = "The Resource Manager ID of the storage container created for terraform backend state."
   value       = module.state_container.container_resource_manager_id
