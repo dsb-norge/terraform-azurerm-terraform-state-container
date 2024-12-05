@@ -128,7 +128,7 @@ run "azure_region_can_not_be_empty" {
     ]
 }
 
-run "costcente_tag_value_can_not_be_empty" {
+run "costcenter_tag_value_can_not_be_empty" {
     command = plan
 
     variables {
