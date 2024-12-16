@@ -435,7 +435,7 @@ run "network_rules_multiple_ip_rules" {
             bypass                      = null
             default_action              = "Deny"
             ip_rules                    = ["224.0.0.1/28", "225.0.0.2"]
-            virtual_network_subnet_ids  = ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/myStorageAccount"]
+            virtual_network_subnet_ids  = null
         }
     }
 
