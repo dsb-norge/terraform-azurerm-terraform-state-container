@@ -1,155 +1,18 @@
-# tf-mod-azure-terraform-state-container
+# Terraform module for creation of Terraform remote state container in Azure
 
-Terraform module to manage terraform state containers in Azure
+Terraform module to create storage account with container to store Terraform state remotely in azure.  
 
-## Resources
+Module has following features:  
 
-Where possible the resources are declared with `lifecycle.prevent_destroy = true` to prevent accidental deletion of resources.
-
-The module creates the following resource types in Azure:
-
-| Resource type                | Example name                             | Tags |
-| ---------------------------- | ---------------------------------------- | ---- |
-| Resource group               | `rg2-ss1-my-first-web-app-terraform-dev` | X    |
-| Storage account              | `strg2ss1mwatfdev`                       | X    |
-| Storage account network rule | -                                        | -    |
-| Storage container            | `terraform-remote-backend-state`         | -    |
-
-**Note:** Example names are based on the [basic example](#basic-example) further down.
-
-### Tags
-
-The resource are tagged as follows:
-
-| Tag             | Value                                                          |
-| --------------- | -------------------------------------------------------------- |
-| ApplicationName | `var.application_name`                                         |
-| CreatedBy       | `var.created_by_tag`                                           |
-| Environment     | `var.environment_name`                                         |
-| Description     | Hardcoded with `var.application_friendly_description` appended |
+- Create resource group for storage account.  
+- Create storage account with private container for state.  
+- Create Delete lock on resources.  
+- Create network rules for storage account.  
+- Tag resources with createBy and costCenter tags.  
 
 ## Usage
 
-### Basic example
-
-Example with minimum set of input parameters.
-
-```terraform
-provider "azurerm" {
-  features {}
-}
-module "terraform_state_container" {
-  source = "git@github.com:dsb-norge/tf-mod-azure-terraform-state-container.git?ref=v0"
-
-  # minimum information necessary
-  subscription_number              = 1
-  environment_name                 = "dev"
-  application_name                 = "my-web-first-app"
-  application_name_short           = "mwa" # for storage account name
-  application_friendly_description = "the first web app"
-  created_by_tag                   = "Person or code repo"
-}
-```
-
-### Full example
-
-Example with all possible set of input parameters.
-
-```terraform
-provider "azurerm" {
-  features {}
-}
-module "terraform_state_container" {
-  source = "git@github.com:dsb-norge/tf-mod-azure-terraform-state-container.git?ref=v0"
-
-  # minimum information necessary
-  subscription_number              = 1
-  environment_name                 = "dev"
-  application_name                 = "my-web-first-app"
-  application_name_short           = "mwa" # for storage account name
-  application_friendly_description = "the first web app"
-  created_by_tag                   = "Person or code repo"
-
-  # optional parameters and their defaults
-  azure_region         = "norwayeast"
-  state_container_name = "terraform-remote-backend-state"
-  network_rules = {
-    default_action             = "Deny"
-    bypass                     = null
-    ip_rules                   = ["91.229.21.0/24"] # allow only DSB public IPs
-    virtual_network_subnet_ids = null
-  }
-}
-```
-
-## Development
-
-### Validate your code
-
-```shell
-  # Init project, run fmt and validate
-  terraform init -reconfigure
-  terraform fmt -check -recursive
-  terraform validate
-
-  # Lint with TFLint, calling script from https://github.com/dsb-norge/terraform-tflint-wrappers
-  alias lint='curl -s https://raw.githubusercontent.com/dsb-norge/terraform-tflint-wrappers/main/tflint_linux.sh | bash -s --'
-  lint
-
-```
-
-### Generate and inject terraform-docs in README.md
-
-```shell
-# go1.17+
-go install github.com/terraform-docs/terraform-docs@v0.18.0
-export PATH=$PATH:$(go env GOPATH)/bin
-terraform-docs markdown table --output-file README.md .
-```
-
-### Release
-
-After merge of PR to main use tags to release.
-
-Use semantic versioning, see [semver.org](https://semver.org/). Always push tags and add tag annotations.
-
-#### Patch release
-
-Example of patch release `v1.0.1`:
-
-```bash
-git checkout origin/main
-git pull origin main
-git tag --sort=-creatordate | head -n 5 # review latest release tag to determine which is the next one
-git log v1..HEAD --pretty=format:"%s"   # output changes since last release
-git tag -a 'v1.0.1'  # add patch tag, add change description
-git tag -f -a 'v1.0' # move the minor tag, amend the change description
-git tag -f -a 'v1'   # move the major tag, amend the change description
-git push origin 'refs/tags/v1.0.1'  # push the new tag
-git push -f origin 'refs/tags/v1.0' # force push moved tags
-git push -f origin 'refs/tags/v1'   # force push moved tags
-```
-
-#### Major release
-
-Same as patch release except that the major version tag is a new one. I.e. we do not need to force tag/push.
-
-Example of major release `v2.0.0`:
-
-```bash
-git checkout origin/main
-git pull origin main
-git tag --sort=-creatordate | head -n 5 # review latest release tag to determine which is the next one
-git log v1..HEAD --pretty=format:"%s"   # output changes since last release
-git tag -a 'v2.0.0'  # add patch tag, add your change description
-git tag -a 'v2.0'    # add minor tag, add your change description
-git tag -a 'v0'      # add major tag, add your change description
-git push --tags      # push the new tags
-```
-
-**Note:** If you are having problems pulling main after a release, try to force fetch the tags: `git fetch --tags -f`.
-
-## terraform-docs
+Refer to [examples](https://github.com/dsb-norge/terraform-azurerm-terraform-state-container/tree/main/examples) for usage of module.
 
 <!-- BEGIN_TF_DOCS -->
 <!-- markdownlint-disable MD033 -->
