@@ -1,7 +1,6 @@
 # Terraform module for creation of Terraform remote state container in Azure
 
-Terraform module to create storage account with container to store Terraform state remotely in azure.  
-
+Terraform module to create storage account with container to store Terraform state remotely in azure.
 Module has following features:  
 
 - Create resource group for storage account.  
