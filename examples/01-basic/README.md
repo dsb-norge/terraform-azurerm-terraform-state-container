@@ -5,11 +5,7 @@
 ```hcl
 provider "azurerm" {
   storage_use_azuread = true
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> 8fe9bd5 (docs: update docs manually to check if commit from actions break branch mandatory check)
   features {}
 }
 
