@@ -5,12 +5,6 @@
 # Local .terraform directories
 **/.terraform/*
 
-# We don't want providers declared in Terraform modules
-.providers.tf
-
-# Terraform lock files
-**/.terraform.lock.hcl
-
 # .tfstate files
 **/*.tfstate
 **/*.tfstate.*
@@ -22,10 +16,23 @@
 **/*_override.tf
 **/*_override.tf.json
 
+# Ignore CLI configuration files
+**/.terraformrc
+**/terraform.rc
+
+# Terraform lock files
+**/.terraform.lock.hcl
+
 
 ###############################################################################
 # TFLint
 ###############################################################################
+
+# Config files
+**/.tflint.hcl
+
+# Except config files for envs
+!envs/**/.tflint.hcl
 
 # Local tflint directories
 **/.tflint/*
@@ -35,5 +42,16 @@
 # Other
 ###############################################################################
 
-# MacOS files
-.DS_Store
+
+# VScode files
+**/.vscode/*
+
+# Idea and key file
+*.idea/
+*.key
+
+# Crash log files
+crash.log
+
+# MacOS specific files
+**/.DS_Store
