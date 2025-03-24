@@ -30,14 +30,28 @@ resource "azurerm_resource_group" "tfstate" {
   }
 }
 resource "azurerm_storage_account" "tfstate" {
-  account_replication_type = "LRS"
-  account_tier             = "Standard"
-  location                 = var.azure_region
-  name                     = local.storage_account_name
-  resource_group_name      = azurerm_resource_group.tfstate.name
+  account_replication_type        = "LRS"
+  account_tier                    = "Standard"
+  location                        = var.azure_region
+  name                            = local.storage_account_name
+  resource_group_name             = azurerm_resource_group.tfstate.name
+  allow_nested_items_to_be_public = false
+  default_to_oauth_authentication = true
+  shared_access_key_enabled       = false
   tags = merge(local.common_tags, {
     Description = "Storage account with terraform backend state for ${var.application_friendly_description}."
   })
+
+  blob_properties {
+    change_feed_enabled           = true
+    change_feed_retention_in_days = 90
+    last_access_time_enabled      = true
+    versioning_enabled            = true
+
+    delete_retention_policy {
+      days = 30
+    }
+  }
 
   lifecycle {
     ignore_changes = [
