@@ -519,7 +519,7 @@ run "network_rules_private_link_access_resource_id_can_not_be_empty" {
       }
     }
   }
-  expect_failures = [ 
+  expect_failures = [
     var.network_rules,
   ]
 }
@@ -539,7 +539,7 @@ run "network_rules_private_link_access_tenant_id_should_be_valid_format" {
       }
     }
   }
-  expect_failures = [ 
+  expect_failures = [
     var.network_rules,
   ]
 }
