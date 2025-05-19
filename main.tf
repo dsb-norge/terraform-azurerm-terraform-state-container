@@ -68,6 +68,19 @@ resource "azurerm_storage_account_network_rules" "tfstate" {
   bypass                     = var.network_rules.bypass
   ip_rules                   = var.network_rules.ip_rules
   virtual_network_subnet_ids = var.network_rules.virtual_network_subnet_ids
+
+  dynamic "private_link_access" {
+    for_each = (
+      var.network_rules != null && var.network_rules.private_link_access != null
+      ? tolist([var.network_rules.private_link_access])
+      : []
+    )
+
+    content {
+      endpoint_resource_id = private_link_access.value.endpoint_resource_id
+      endpoint_tenant_id   = private_link_access.value.endpoint_tenant_id
+    }
+  }
   # tags not supported
 }
 resource "azurerm_storage_container" "tfstate" {
