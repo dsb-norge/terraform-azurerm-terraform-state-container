@@ -504,6 +504,46 @@ run "network_rules_invalid_resource_id" {
   ]
 }
 
+run "network_rules_private_link_access_resource_id_can_not_be_empty" {
+  command = plan
+
+  variables {
+    network_rules = {
+      bypass                     = null
+      default_action             = "Deny"
+      ip_rules                   = ["224.0.0.1"]
+      virtual_network_subnet_ids = ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/myStorageAccount"]
+      private_link_access = {
+        endpoint_resource_id = ""
+        endpoint_tenant_id   = "12345678-1234-9876-4563-123456789012"
+      }
+    }
+  }
+  expect_failures = [ 
+    var.network_rules,
+  ]
+}
+
+run "network_rules_private_link_access_tenant_id_should_be_valid_format" {
+  command = plan
+
+  variables {
+    network_rules = {
+      bypass                     = null
+      default_action             = "Deny"
+      ip_rules                   = ["224.0.0.1"]
+      virtual_network_subnet_ids = ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/myStorageAccount"]
+      private_link_access = {
+        endpoint_resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummy/providers/something"
+        endpoint_tenant_id   = "12345678-1234-9876-4563-123"
+      }
+    }
+  }
+  expect_failures = [ 
+    var.network_rules,
+  ]
+}
+
 run "state_container_name_can_not_be_empty" {
   command = plan
 
@@ -525,6 +565,7 @@ run "state_container_name_default_value" {
     condition     = azurerm_storage_container.tfstate.name == "terraform-remote-backend-state"
   }
 }
+
 
 #TODO: uncomment blocks below when terraform test can handle pervent_destroy behavior
 /*

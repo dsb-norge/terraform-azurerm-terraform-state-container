@@ -83,6 +83,10 @@ variable "network_rules" {
     bypass                     = list(string)
     ip_rules                   = list(string)
     virtual_network_subnet_ids = list(string)
+    private_link_access = optional(object({
+      endpoint_resource_id = string
+      endpoint_tenant_id   = string
+    }))
   })
   default = {
     # Default is to allow only DSB public IPs.
@@ -155,6 +159,23 @@ variable "network_rules" {
             for id in var.network_rules.virtual_network_subnet_ids : (
               id != null && length(id) > 50
           )])
+        ) : true # allow to be optional
+      ) : true   # pass if not supplied, terraform handles this
+    )
+  }
+
+  validation {
+    error_message = <<-EOM
+      When specifying 'private_link_access' in 'network_rules':
+      - 'endpoint_resource_id' must be a non-empty string.
+      - 'endpoint_tenant_id' must be a valid Azure tenant GUID (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx).
+    EOM
+    condition = (
+      can(var.network_rules.private_link_access) ? (
+        var.network_rules.private_link_access != null ? (
+          length(var.network_rules.private_link_access.endpoint_resource_id) > 0 #checking length here since resource ID can have segments after sub_id and in other versions it goes directly to providers
+          &&
+          can(regex("^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$", lower(var.network_rules.private_link_access.endpoint_tenant_id)))
         ) : true # allow to be optional
       ) : true   # pass if not supplied, terraform handles this
     )
