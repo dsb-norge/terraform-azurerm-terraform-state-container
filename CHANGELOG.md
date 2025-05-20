@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.0](https://github.com/dsb-norge/terraform-azurerm-terraform-state-container/compare/v2.0.0...v2.1.0) (2025-05-20)
+
+
+### Features
+
+* Add support for private_link_access. ([d9f4b07](https://github.com/dsb-norge/terraform-azurerm-terraform-state-container/commit/d9f4b07c805a154c591b01bbfb87c4c2cee5e1e8))
+* support for private link access. ([d9f4b07](https://github.com/dsb-norge/terraform-azurerm-terraform-state-container/commit/d9f4b07c805a154c591b01bbfb87c4c2cee5e1e8))
+
 ## [2.0.0](https://github.com/dsb-norge/terraform-azurerm-terraform-state-container/compare/v1.2.3...v2.0.0) (2025-03-24)
 
 
