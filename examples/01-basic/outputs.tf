@@ -18,8 +18,12 @@ output "resource_group_name" {
   value       = module.state_container.resource_group_name
 }
 
+output "storage_account_id" {
+  description = "The ID of the storage account created for terraform backend state."
+  value       = module.state_container.storage_account_id
+}
+
 output "storage_account_name" {
   description = "Name of the storage account created for terraform backend state."
   value       = module.state_container.storage_account_name
-
 }

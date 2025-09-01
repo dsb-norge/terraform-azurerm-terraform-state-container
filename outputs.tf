@@ -16,6 +16,10 @@ output "resource_group_name" {
   description = "Name of the resource group created for terraform backend state."
   value       = azurerm_resource_group.tfstate.name
 }
+output "storage_account_id" {
+  description = "The ID of the storage account created for terraform backend state."
+  value       = azurerm_storage_account.tfstate.id
+}
 output "storage_account_name" {
   description = "Name of the storage account created for terraform backend state."
   value       = azurerm_storage_account.tfstate.name
