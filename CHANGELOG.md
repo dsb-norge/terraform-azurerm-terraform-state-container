@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/dsb-norge/terraform-azurerm-terraform-state-container/compare/v2.1.0...v2.2.0) (2025-09-01)
+
+
+### Features
+
+* output storage account id ([#10](https://github.com/dsb-norge/terraform-azurerm-terraform-state-container/issues/10)) ([d1ea028](https://github.com/dsb-norge/terraform-azurerm-terraform-state-container/commit/d1ea028a8df03c31ffe074c94cb5ba45bfa11838))
+
 ## [2.1.0](https://github.com/dsb-norge/terraform-azurerm-terraform-state-container/compare/v2.0.0...v2.1.0) (2025-05-20)
 
 
