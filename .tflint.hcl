@@ -25,7 +25,7 @@ rule "terraform_required_version" { enabled = false }   # Disallow terraform dec
 # plugin: TFLint Ruleset for terraform-provider-azurerm - https://github.com/terraform-linters/tflint-ruleset-azurerm/tree/master
 plugin "azurerm" {
   enabled = true
-  version = "0.27.0"
+  version = "0.29.0"
   source  = "github.com/terraform-linters/tflint-ruleset-azurerm"
 }
 
