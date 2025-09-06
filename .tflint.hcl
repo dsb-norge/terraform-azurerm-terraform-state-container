@@ -108,7 +108,7 @@ rule "terraform_locals_order" { enabled = false }            # We use logical or
 # plugin: TFLint Ruleset for terraform-provider-azurerm-ext - https://github.com/Azure/tflint-ruleset-azurerm-ext/tree/master
 plugin "azurerm-ext" {
   enabled     = true
-  version     = "0.6.0"
+  version     = "0.6.1"
   source      = "github.com/Azure/tflint-ruleset-azurerm-ext"
   signing_key = <<-KEY
     -----BEGIN PGP PUBLIC KEY BLOCK-----
