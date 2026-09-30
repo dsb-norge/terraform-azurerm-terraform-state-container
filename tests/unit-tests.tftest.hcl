@@ -1,19 +1,14 @@
-provider "azurerm" {
-  features {}
-}
-
 #TODO: uncomment blocks below when terraform test can handle pervent_destroy behavior
 #Github issue: https://github.com/hashicorp/terraform/issues/34960
 
-#mock_provider "azurerm" {
-#  alias = "mock"
-#  override_data {
-#    target = data.azurerm_subscription.current
-#    values = {
-#      id = "/subscriptions/12345678-1234-9876-4563-123456789012"
-#    }
-#  }
-#}
+mock_provider "azurerm" {
+  override_data {
+    target = data.azurerm_subscription.current
+    values = {
+      id = "/subscriptions/12345678-1234-9876-4563-123456789012"
+    }
+  }
+}
 
 run "application_friendly_description_can_not_be_empty" {
   command = plan
@@ -572,10 +567,6 @@ run "state_container_name_default_value" {
 run "it_should_output_container_id" {
     command = apply
 
-    providers = {
-        azurerm = azurerm.mock
-    }
-
     assert {
         error_message = "Storage container id output is missing"
         condition = length(azurerm_storage_container.tfstate.id) > 0
@@ -584,10 +575,6 @@ run "it_should_output_container_id" {
 
 run "it_should_output_container_resource_manager_id" {
     command = apply
-
-    providers = {
-        azurerm = azurerm.mock
-    }
 
     assert {
         error_message = "Storage container resource manager id output is missing"
@@ -598,10 +585,6 @@ run "it_should_output_container_resource_manager_id" {
 run "it_should_output_container_name" {
     command = apply
 
-    providers = {
-        azurerm = azurerm.mock
-    }
-
     assert {
         error_message = "Storage container name output is missing"
         condition = length(azurerm_storage_container.tfstate.name) > 0
@@ -611,10 +594,6 @@ run "it_should_output_container_name" {
 run "it_should_output_resource_group_name" {
     command = apply
 
-    providers = {
-        azurerm = azurerm.mock
-    }
-
     assert {
         error_message = "Resource group name output is missing"
         condition = length(azurerm_resource_group.tfstate.name) > 0
@@ -623,10 +602,6 @@ run "it_should_output_resource_group_name" {
 
 run "it_should_output_storage_account_name" {
     command = apply
-
-    providers = {
-        azurerm = azurerm.mock
-    }
 
     assert {
         error_message = "Storage account name output is missing"
