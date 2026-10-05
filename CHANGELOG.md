@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/dsb-norge/terraform-azurerm-terraform-state-container/compare/v2.2.0...v3.0.0) (2026-10-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* callers on azurerm 3 stay on v2.2.0 of this module, or upgrade azurerm to 4.
+
+### Features
+
+* require azurerm 4 ([0fd6332](https://github.com/dsb-norge/terraform-azurerm-terraform-state-container/commit/0fd6332714d2a9023a49f5c7030967df5a16f534))
+
 ## [2.2.0](https://github.com/dsb-norge/terraform-azurerm-terraform-state-container/compare/v2.1.0...v2.2.0) (2025-09-01)
 
 
