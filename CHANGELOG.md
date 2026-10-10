@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/dsb-norge/terraform-azurerm-terraform-state-container/compare/v3.0.0...v3.0.1) (2026-10-10)
+
+
+### Bug Fixes
+
+* require Terraform 1.3 or newer ([1435c96](https://github.com/dsb-norge/terraform-azurerm-terraform-state-container/commit/1435c96a2f3a9879dee04d6f6cfeca4ba581d53f))
+
 ## [3.0.0](https://github.com/dsb-norge/terraform-azurerm-terraform-state-container/compare/v2.2.0...v3.0.0) (2026-10-05)
 
 
